@@ -5,7 +5,7 @@ let image1 = document.querySelector('section img:first-child');
 let image2 = document.querySelector('section img:nth-child(2)');
 let image3 = document.querySelector('section img:nth-child(3)');
 let userVoted = 0;
-let maxVotes = 25;
+let maxVotes = 26;
 let results = document.querySelector('ul');
 let resultsButton = document.getElementById('results');
 
@@ -86,8 +86,9 @@ function handleClick(e) {
 function renderResults() {
   if (userVoted !== maxVotes) {
     resultsButton.removeEventListener('click', renderResults);
-  } else {
+  } else if (userVoted === maxVotes) {
     for (let i = 0; i < products.length; i++) {
+      resultsButton.addEventListener('click', renderResults);
       let li = document.createElement('li');
       li.textContent = `${products[i].name} had ${products[i].views} views and ${products[i].score} votes`;
       results.appendChild(li);
@@ -102,5 +103,3 @@ myContainer.addEventListener('click', handleClick);
 renderProducts();
 
 resultsButton.addEventListener('click', renderResults);
-
-renderResults();

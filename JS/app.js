@@ -6,8 +6,9 @@ let image2 = document.querySelector('section img:nth-child(2)');
 let image3 = document.querySelector('section img:nth-child(3)');
 let userVoted = 0;
 let maxVotes = 26;
-let results = document.querySelector('ul');
+//let results = document.querySelector('ul');
 let resultsButton = document.getElementById('results');
+let indexArray = [];
 
 
 function Product(name, fileExtension = 'jpg') {
@@ -44,9 +45,18 @@ function randomProduct() {
 }
 
 function renderProducts() {
-  let product1 = randomProduct();
-  let product2 = randomProduct();
-  let product3 = randomProduct();
+
+  while (indexArray.length < 5) {
+    let ranNum = randomProduct();
+    if (!indexArray.includes(ranNum)) {
+      indexArray.push(ranNum);
+    }
+  }
+
+
+  let product1 = indexArray.shift();
+  let product2 = indexArray.shift();
+  let product3 = indexArray.shift();
 
   while (product1 === product2 || product1 === product3) {
     product1 = randomProduct();
@@ -83,7 +93,7 @@ function handleClick(e) {
   }
 }
 
-function renderResults() {
+/*function renderResults() {
   if (userVoted !== maxVotes) {
     resultsButton.removeEventListener('click', renderResults);
   } else if (userVoted === maxVotes) {
@@ -95,11 +105,94 @@ function renderResults() {
       console.log(li);
     }
   }
+}*/
+
+
+function renderChart() {
+  let productNames = [];
+  let productViews = [];
+  let productScore = [];
+
+  for (let i = 0; i < products.length; i++) {
+    productNames.push(products[i].name);
+    productViews.push(products[i].views);
+    productScore.push(products[i].score);
+  }
+
+  const data = {
+    labels: productNames,
+    datasets: [{
+      label: 'Views',
+      data: productViews,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(201, 203, 207, 0.2)'
+      ],
+      borderColor: [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)'
+      ],
+      borderWidth: 1
+    }, {
+      label: 'Votes',
+      data: productScore,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(201, 203, 207, 0.2)'
+      ],
+      borderColor: [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)'
+      ],
+      borderWidth: 1
+    }
+    ]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
+
+
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
 }
+
+
 
 
 myContainer.addEventListener('click', handleClick);
 
 renderProducts();
 
-resultsButton.addEventListener('click', renderResults);
+resultsButton.addEventListener('click',renderChart);

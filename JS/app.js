@@ -5,8 +5,7 @@ let image1 = document.querySelector('section img:first-child');
 let image2 = document.querySelector('section img:nth-child(2)');
 let image3 = document.querySelector('section img:nth-child(3)');
 let userVoted = 0;
-let maxVotes = 26;
-//let results = document.querySelector('ul');
+let maxVotes = 25;
 let resultsButton = document.getElementById('results');
 let indexArray = [];
 
@@ -82,31 +81,16 @@ function handleClick(e) {
   for (let i = 0; i < products.length; i++) {
     if (e.target.alt === products[i].name) {
       products[i].score++;
-      console.log(products[i]);
       break;
     }
   }
   if (maxVotes === userVoted) {
     myContainer.removeEventListener('click', handleClick);
+    renderChart();
   } else {
     renderProducts();
   }
 }
-
-/*function renderResults() {
-  if (userVoted !== maxVotes) {
-    resultsButton.removeEventListener('click', renderResults);
-  } else if (userVoted === maxVotes) {
-    for (let i = 0; i < products.length; i++) {
-      resultsButton.addEventListener('click', renderResults);
-      let li = document.createElement('li');
-      li.textContent = `${products[i].name} had ${products[i].views} views and ${products[i].score} votes`;
-      results.appendChild(li);
-      console.log(li);
-    }
-  }
-}*/
-
 
 function renderChart() {
   let productNames = [];
@@ -125,54 +109,63 @@ function renderChart() {
       label: 'Views',
       data: productViews,
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 205, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(201, 203, 207, 0.2)'
+        '#6e15b5',
+        '#ad00a2',
+        '#d8008a',
+        '#f5006f',
+        '#ff2755',
+        '#ff5a3b',
+        '#ff8221'
       ],
       borderColor: [
-        'rgb(255, 99, 132)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)',
-        'rgb(153, 102, 255)',
-        'rgb(201, 203, 207)'
+        '#24073b',
+        '#500949',
+        '#7b0c50',
+        '#a51b50',
+        '#c93549',
+        '#e5573c',
+        '#f87d28'
       ],
       borderWidth: 1
     }, {
       label: 'Votes',
       data: productScore,
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 205, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(201, 203, 207, 0.2)'
+        '#316687',
+        '#506da3',
+        '#836db3',
+        '#ba68b0',
+        '#ea639a',
+        '#ff6976',
+        '#ff8249'
       ],
       borderColor: [
-        'rgb(255, 99, 132)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)',
-        'rgb(153, 102, 255)',
-        'rgb(201, 203, 207)'
+        '#152c3b',
+        '#004355',
+        '#005c61',
+        '#00735d',
+        '#128949',
+        '#669b29',
+        '#b0a600'
       ],
       borderWidth: 1
     }
-    ]
+    ],
   };
 
   const config = {
     type: 'bar',
     data: data,
     options: {
+      plugins: {
+        legend: {
+          display: true,
+          labels: {
+            color: 'rgb(0,0,0)',
+            fontColor: 'rgb(0,0,0)'
+          },
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
@@ -188,11 +181,8 @@ function renderChart() {
   );
 }
 
-
-
-
 myContainer.addEventListener('click', handleClick);
 
 renderProducts();
 
-resultsButton.addEventListener('click',renderChart);
+// resultsButton.addEventListener('click', renderChart);

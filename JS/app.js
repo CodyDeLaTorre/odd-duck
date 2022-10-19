@@ -6,7 +6,7 @@ let image2 = document.querySelector('section img:nth-child(2)');
 let image3 = document.querySelector('section img:nth-child(3)');
 let userVoted = 0;
 let maxVotes = 25;
-let resultsButton = document.getElementById('results');
+//let resultsButton = document.getElementById('results');
 let indexArray = [];
 
 
@@ -168,7 +168,16 @@ function renderChart() {
       },
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            color: 'black'
+          }
+        },
+        x: {
+          beginAtZero: true,
+          ticks: {
+            color: 'black'
+          }
         }
       }
     },

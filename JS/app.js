@@ -6,7 +6,6 @@ let image2 = document.querySelector('section img:nth-child(2)');
 let image3 = document.querySelector('section img:nth-child(3)');
 let userVoted = 0;
 let maxVotes = 25;
-//let resultsButton = document.getElementById('results');
 let indexArray = [];
 
 
@@ -87,6 +86,7 @@ function handleClick(e) {
   if (maxVotes === userVoted) {
     myContainer.removeEventListener('click', handleClick);
     renderChart();
+    storeProducts();
   } else {
     renderProducts();
   }
@@ -170,13 +170,13 @@ function renderChart() {
         y: {
           beginAtZero: true,
           ticks: {
-            color: 'black'
+            fontColor: 'black'
           }
         },
         x: {
           beginAtZero: true,
           ticks: {
-            color: 'black'
+            fontColor: 'black'
           }
         }
       }
@@ -190,8 +190,24 @@ function renderChart() {
   );
 }
 
+
+function storeProducts(){
+  let stringifiedProducts = JSON.stringify(products);
+  localStorage.setItem('products', stringifiedProducts);
+}
+
+function getProducts() {
+  let potentialProducts = localStorage.getItem('products');
+  if (potentialProducts) {
+    let parseProducts = JSON.parse(potentialProducts);
+    console.log(products);
+    products = parseProducts;
+    console.log(products);
+  }
+}
+
+
 myContainer.addEventListener('click', handleClick);
 
+getProducts();
 renderProducts();
-
-// resultsButton.addEventListener('click', renderChart);

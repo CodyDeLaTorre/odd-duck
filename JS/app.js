@@ -200,9 +200,7 @@ function getProducts() {
   let potentialProducts = localStorage.getItem('products');
   if (potentialProducts) {
     let parseProducts = JSON.parse(potentialProducts);
-    console.log(products);
     products = parseProducts;
-    console.log(products);
   }
 }
 
